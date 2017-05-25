@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+
+<body>
+	<app-root></app-root>
+<script src="../node_modules/reflect-metadata/Reflect.js"></script>
+<script src="../node_modules/rxjs/bundles/Rx.js"></script>
+<script src="../node_modules/zone.js/dist/zone.js"></script>
+<script src="../node_modules/@angular/core/bundles/core.umd.js"></script>
+<script src="../node_modules/@angular/common/bundles/common.umd.js"></script>
+<script src="../node_modules/@angular/http/bundles/http.umd.js"></script>
+<script src="../node_modules/@angular/compiler/bundles/compiler.umd.js"></script>
+<script src="../node_modules/@angular/platform-browser/bundles/platform-browser.umd.js"></script>
+<script src="../node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"></script>
+<script>
+class MyComponent{
+	constructor(http){
+		console.log(http)
+		this.title = Date.now().toString(36)
+	}
+	click(){
+		this.title = Date.now().toString(36)
+	}
+}
+Reflect.decorate([ng.core.Component({
+	selector: `app-root`,
+	template: `<div (click)="click()">{{ title }}</div>`
+})], MyComponent)
+
+class MyModule{
+	constructor(){
+		console.log(this)
+	}
+}
+Reflect.decorate([ng.core.NgModule({
+	declarations: [MyComponent],
+	imports: [
+		ng.platformBrowser.BrowserModule,
+		ng.http.HttpModule
+	],
+	providers: [],
+	bootstrap: [MyComponent]
+})], MyModule)
+
+ng.platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(MyModule)
+</script>
+</body>
+</html>
